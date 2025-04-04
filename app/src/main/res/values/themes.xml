@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Tema para el splash screen -->
+    <style name="Theme.Splash" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/mi_color_personalizado</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <!-- Tema principal de tu app -->
+    <style name="Theme.KmeansFaceClustering" parent="android:Theme.Material.Light.NoActionBar" />
+
+</resources>
