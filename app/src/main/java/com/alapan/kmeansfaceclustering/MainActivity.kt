@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.LifecycleOwner
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import com.alapan.kmeansfaceclustering.ui.theme.KmeansFaceClusteringTheme
 
@@ -18,14 +17,13 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.compose.material3.Text
-import androidx.compose.material3.Button
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +66,12 @@ fun CameraScreen() {
             }
         }
     } else {
-        // Si no tiene permisos, muestra una pantalla de solicitud
+        // Lanza automáticamente la solicitud de permiso al entrar
+        LaunchedEffect(Unit) {
+            launcher.launch(Manifest.permission.CAMERA)
+        }
+
+        // Puedes dejar una pantalla neutral mientras tanto
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             Box(
                 modifier = Modifier
@@ -76,17 +79,10 @@ fun CameraScreen() {
                     .padding(innerPadding),
                 contentAlignment = Alignment.Center
             ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text("La app necesita acceso a la cámara.")
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Button(onClick = {
-                        launcher.launch(Manifest.permission.CAMERA)
-                    }) {
-                        Text("Conceder permiso")
-                    }
-                }
+                Text("Solicitando permiso de cámara...")
             }
         }
     }
+
 }
 
